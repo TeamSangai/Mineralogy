@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "drownable-rainfall",
-	"version": "${version}",
-	"name": "Drownable-Rainfall",
-	"description": "Makes you Drown in Rain.",
+	"id": "mineralogy",
+	"version": "0",
+	"name": "Mineralogy",
+	"description": "Adds new ways to get minerals",
 	"authors": [
 		"Mr.Geoves"
 	],
@@ -12,18 +12,21 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/drownable-rainfall/icon.png",
+	"icon": "assets/mineralogy/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"geoves.drownrain.DrownableRainfall"
+			"geoves.mineralogy.Mineralogy"
 		],
 		"fabric-datagen": [
-			"geoves.drownrain.DrownableRainfallDataGenerator"
+			"geoves.mineralogy.MineralogyDataGenerator"
+		],
+		"client": [
+			"geoves.mineralogy.MineralogyClient"
 		]
 	},
 	"mixins": [
-		"drownable-rainfall.mixins.json"
+		"mineralogy.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.13",
