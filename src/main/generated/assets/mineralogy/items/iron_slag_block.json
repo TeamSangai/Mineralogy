@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "mineralogy:block/iron_slag_block"
+  }
+}

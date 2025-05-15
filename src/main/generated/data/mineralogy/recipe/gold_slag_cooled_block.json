@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "mineralogy:gold_slag_block",
+    "minecraft:powder_snow_bucket"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mineralogy:gold_slag_cooled_block"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "values": [
+    "mineralogy:iron_slag_block",
+    "mineralogy:iron_slag_cooled_block",
+    "mineralogy:copper_slag_block",
+    "mineralogy:copper_slag_cooled_block",
+    "mineralogy:gold_slag_block",
+    "mineralogy:gold_slag_cooled_block",
+    "mineralogy:paydirt_dry"
+  ]
+}

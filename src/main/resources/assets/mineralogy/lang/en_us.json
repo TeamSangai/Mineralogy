@@ -1,0 +1,13 @@
+{
+  "item.mineralogy.copper_nugget": "Copper Nugget",
+  "item.mineralogy.copper_pan": "Copper Pan",
+
+  "block.mineralogy.copper_slag_block": "Hot Copper Slag",
+  "block.mineralogy.copper_slag_cooled_block": "Cooled Copper Slag",
+  "block.mineralogy.paydirt_dry": "Dry Pay Dirt",
+  "block.mineralogy.iron_slag_block": "Hot Iron Slag",
+  "block.mineralogy.iron_slag_cooled_block": "Cooled Iron Slag",
+  "block.mineralogy.gold_slag_block": "Hot Gold Slag",
+  "block.mineralogy.gold_slag_cooled_block": "Cooled Gold Slag",
+  "block.mineralogy.freezer_block": "Freezer"
+}

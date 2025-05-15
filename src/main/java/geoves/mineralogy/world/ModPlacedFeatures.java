@@ -1,0 +1,43 @@
+package geoves.mineralogy.world;
+
+import geoves.mineralogy.Mineralogy;
+import net.minecraft.registry.Registerable;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.Identifier;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.FeatureConfig;
+import net.minecraft.world.gen.feature.PlacedFeature;
+import net.minecraft.world.gen.placementmodifier.PlacementModifier;
+
+import java.util.List;
+
+public class ModPlacedFeatures {
+    public static final RegistryKey<PlacedFeature> COPPER_SLAG_PLACED_KEY = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of("mineralogy","copper_slags"));
+    public static final RegistryKey<PlacedFeature> IRON_SLAG_PLACED_KEY = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of("mineralogy","iron_slag"));
+    public static final RegistryKey<PlacedFeature> GOLD_SLAG_PLACED_KEY = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of("mineralogy","gold_slags"));
+
+
+
+    public static void bootstrap(Registerable<PlacedFeature> context) {
+        var configuredFeatures = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
+
+    }
+
+    public static RegistryKey<PlacedFeature> registerKey(String name) {
+        return RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of(Mineralogy.MOD_ID, name));
+    }
+
+    private static void register(Registerable<PlacedFeature> context, RegistryKey<PlacedFeature> key, RegistryEntry<ConfiguredFeature<?, ?>> configuration,
+                                 List<PlacementModifier> modifiers) {
+        context.register(key, new PlacedFeature(configuration, List.copyOf(modifiers)));
+    }
+
+    private static <FC extends FeatureConfig, F extends Feature<FC>> void register(Registerable<PlacedFeature> context, RegistryKey<PlacedFeature> key,
+                                                                                   RegistryEntry<ConfiguredFeature<?, ?>> configuration,
+                                                                                   PlacementModifier... modifiers) {
+        register(context, key, configuration, List.of(modifiers));
+    }
+}

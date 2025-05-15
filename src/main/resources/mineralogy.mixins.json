@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "geoves.mineralogy.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "SnowBucketCraftingRemainingFix"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
