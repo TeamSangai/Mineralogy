@@ -11,7 +11,9 @@ import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 public class SlagFurnaceScreenHandler extends ScreenHandler {
     private final Inventory inventory;
@@ -19,7 +21,7 @@ public class SlagFurnaceScreenHandler extends ScreenHandler {
     public final SlagFurnaceBlockEntity blockEntity;
 
     public SlagFurnaceScreenHandler(int syncId, PlayerInventory inventory, BlockPos pos) {
-        this(syncId, inventory, inventory.player.getWorld().getBlockEntity(pos), new ArrayPropertyDelegate(2));
+        this(syncId, inventory, inventory.player.getWorld().getBlockEntity(pos), new ArrayPropertyDelegate(4));
     }
 
 
@@ -30,13 +32,26 @@ public class SlagFurnaceScreenHandler extends ScreenHandler {
         this.blockEntity = ((SlagFurnaceBlockEntity) blockEntity);
         this.propertyDelegate = arrayPropertyDelegate;
 
-        this.addSlot(new Slot(inventory, 0, 54, 34));
-        this.addSlot(new Slot(inventory, 1, 104, 34));
+        this.addSlot(new Slot(inventory, 0, 47, 51));
+        this.addSlot(new Slot(inventory, 1, 47, 16));
+        this.addSlot(new Slot(inventory, 2, 109, 21));
+        this.addSlot(new Slot(inventory, 3, 109, 47));
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
 
         addProperties(arrayPropertyDelegate);
+    }
+    public boolean isCrafting() {
+        return propertyDelegate.get(0) > 0;
+    }
+
+    public int getScaledArrowProgress() {
+        int progress = this.propertyDelegate.get(0);
+        int maxProgress = this.propertyDelegate.get(1); // Max Progress
+        int arrowPixelSize = 24; // This is the width in pixels of your arrow
+
+        return maxProgress != 0 && progress != 0 ? progress * arrowPixelSize / maxProgress : 0;
     }
 
     @Override
@@ -80,5 +95,22 @@ public class SlagFurnaceScreenHandler extends ScreenHandler {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
+    }
+    public boolean isBurning() {
+        return this.propertyDelegate.get(0) > 0;
+    }
+
+    public float getCookProgress() {
+        int i = this.propertyDelegate.get(2);
+        int j = this.propertyDelegate.get(3);
+        return j != 0 && i != 0 ? MathHelper.clamp((float)i / (float)j, 0.0F, 1.0F) : 0.0F;
+    }
+
+    public float getFuelProgress() {
+        int i = this.propertyDelegate.get(1);
+        if (i == 0) {
+            i = 200;
+        }
+        return MathHelper.clamp((float)this.propertyDelegate.get(0) / (float)i, 0.0F, 1.0F);
     }
 }

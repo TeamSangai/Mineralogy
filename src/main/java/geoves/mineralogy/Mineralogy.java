@@ -3,6 +3,7 @@ package geoves.mineralogy;
 import geoves.mineralogy.block.ModBlocks;
 import geoves.mineralogy.block.entity.ModBlockEntities;
 import geoves.mineralogy.item.ModItems;
+import geoves.mineralogy.recipe.ModRecipes;
 import geoves.mineralogy.screen.ModScreenHandlers;
 import geoves.mineralogy.world.gen.ModWorldGeneration;
 import net.fabricmc.api.ModInitializer;
@@ -30,6 +31,7 @@ public class Mineralogy implements ModInitializer {
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerBlockEntities();
 		ModScreenHandlers.registerScreenHandlers();
+		ModRecipes.registerRecipies();
 		ModWorldGeneration.generateModWorldGen();
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, COPPER_SLAG_PLACED_KEY);
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, IRON_SLAG_PLACED_KEY);

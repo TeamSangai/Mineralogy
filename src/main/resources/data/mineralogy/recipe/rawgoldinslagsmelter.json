@@ -1,0 +1,17 @@
+{
+  "type": "mineralogy:slag_smelting",
+  "ingredient": [
+    "minecraft:raw_gold",
+    "minecraft:gold_ore",
+    "minecraft:deepslate_gold_ore"
+  ],
+  "result": {
+    "id": "minecraft:gold_ingot",
+    "count": 1
+  },
+  "byproduct_result": {
+    "id": "mineralogy:gold_slag_block",
+    "count": 1
+  },
+  "experience": 1.0
+}

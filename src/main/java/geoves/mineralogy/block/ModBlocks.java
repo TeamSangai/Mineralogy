@@ -1,10 +1,7 @@
 package geoves.mineralogy.block;
 
 import geoves.mineralogy.Mineralogy;
-import geoves.mineralogy.block.custom.FreezerBlock;
-import geoves.mineralogy.block.custom.PaydirtDry;
-import geoves.mineralogy.block.custom.SlagBlockAbstract;
-import geoves.mineralogy.block.custom.SlagFurnaceBlock;
+import geoves.mineralogy.block.custom.*;
 import net.fabricmc.fabric.api.block.v1.FabricBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
@@ -46,7 +43,10 @@ public class ModBlocks {
     public static final Block FREEZER_BLOCK = registerBlock( "freezer_block",
             new FreezerBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Mineralogy.MOD_ID, "freezer_block"))).strength(1f, 1f)));
     public static final Block SLAG_FURNACE_BLOCK = registerBlock( "slag_furnace_block",
-            new SlagFurnaceBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Mineralogy.MOD_ID, "slag_furnace_block"))).strength(2f, 2f)));
+            new SlagFurnaceBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Mineralogy.MOD_ID, "slag_furnace_block"))).strength(2f, 2f)
+                    .luminance(state -> state.get(SlagFurnaceBlock.LIT) ? 15 : 0)));
+    public static final Block COOLER_BLOCK = registerBlock( "cooler_block",
+            new CoolerBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Mineralogy.MOD_ID, "cooler_block"))).strength(1f, 1f)));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);
@@ -62,6 +62,11 @@ public class ModBlocks {
     public static void registerModBlocks() {
         Mineralogy.LOGGER.info("Registering Mod Blocks for " + Mineralogy.MOD_ID);
 
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> {
+            entries.add(ModBlocks.FREEZER_BLOCK);
+            entries.add(ModBlocks.COOLER_BLOCK);
+            entries.add(ModBlocks.SLAG_FURNACE_BLOCK);
+                });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {
             entries.add(ModBlocks.COPPER_SLAG_BLOCK);
             entries.add(ModBlocks.COPPER_SLAG_COOLED_BLOCK);

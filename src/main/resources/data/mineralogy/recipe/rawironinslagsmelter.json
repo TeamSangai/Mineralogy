@@ -1,0 +1,17 @@
+{
+  "type": "mineralogy:slag_smelting",
+  "ingredient": [
+    "minecraft:raw_iron",
+    "minecraft:iron_ore",
+    "minecraft:deepslate_iron_ore"
+  ],
+  "result": {
+    "id": "minecraft:iron_ingot",
+    "count": 1
+  },
+  "byproduct_result": {
+    "id": "mineralogy:iron_slag_block",
+    "count": 1
+  },
+  "experience": 1.0
+}

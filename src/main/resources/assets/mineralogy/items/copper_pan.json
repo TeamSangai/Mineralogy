@@ -7,7 +7,7 @@
         "model": "mineralogy:item/copper_pan3d"
       },
       "when": [
-        "gui",
+
         "ground",
         "fixed"
       ]

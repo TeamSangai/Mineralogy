@@ -1,7 +1,5 @@
 package geoves.mineralogy.block.entity.custom;
 
-import geoves.mineralogy.block.ModBlocks;
-import geoves.mineralogy.block.custom.FreezerBlock;
 import geoves.mineralogy.block.entity.ImplementedInventory;
 import geoves.mineralogy.block.entity.ModBlockEntities;
 import geoves.mineralogy.screen.custom.FreezerScreenHandler;
@@ -31,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import static geoves.mineralogy.block.custom.FreezerBlock.ACTIVE;
 
-public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
+public class CoolerBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
 
     private static final int INPUT_SLOT = 0;
@@ -41,14 +39,14 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
     private int progress = 0;
     private int maxProgress = 72;
 
-    public FreezerBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.FREEZER_BE, pos, state);
+    public CoolerBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntities.COOLER_BE, pos, state);
         this.propertyDelegate = new PropertyDelegate() {
             @Override
             public int get(int index) {
                 return switch (index) {
-                    case 0 -> FreezerBlockEntity.this.progress;
-                    case 1 -> FreezerBlockEntity.this.maxProgress;
+                    case 0 -> CoolerBlockEntity.this.progress;
+                    case 1 -> CoolerBlockEntity.this.maxProgress;
                     default -> 0;
                 };
             }
@@ -56,8 +54,8 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
             @Override
             public void set(int index, int value) {
                 switch (index) {
-                    case 0: FreezerBlockEntity.this.progress = value;
-                    case 1: FreezerBlockEntity.this.maxProgress = value;
+                    case 0: CoolerBlockEntity.this.progress = value;
+                    case 1: CoolerBlockEntity.this.maxProgress = value;
                 }
             }
 
@@ -80,7 +78,7 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
 
     @Override
     public Text getDisplayName() {
-        return Text.translatable("block.mineralogy.freezer_block");
+        return Text.translatable("block.mineralogy.cooler_block");
     }
 
     @Nullable
@@ -93,15 +91,15 @@ public class FreezerBlockEntity extends BlockEntity implements ExtendedScreenHan
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
         Inventories.writeNbt(nbt, inventory, registryLookup);
-        nbt.putInt("freezer.progress", progress);
-        nbt.putInt("freezer.max_progress", maxProgress);
+        nbt.putInt("cooler.progress", progress);
+        nbt.putInt("cooler.max_progress", maxProgress);
     }
 
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         Inventories.readNbt(nbt, inventory, registryLookup);
-        progress = nbt.getInt("freezer.progress", progress);
-        maxProgress = nbt.getInt("freezer.max_progress", maxProgress);
+        progress = nbt.getInt("cooler.progress", progress);
+        maxProgress = nbt.getInt("cooler.max_progress", maxProgress);
         super.readNbt(nbt, registryLookup);
     }
 

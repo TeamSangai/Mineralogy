@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "mineralogy:block/cooler_block_front",
+    "side": "mineralogy:block/cooler_block_side",
+    "top": "mineralogy:block/cooler_block_top"
+  }
+}

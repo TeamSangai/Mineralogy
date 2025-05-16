@@ -2,6 +2,7 @@ package geoves.mineralogy.block.entity;
 
 import geoves.mineralogy.Mineralogy;
 import geoves.mineralogy.block.ModBlocks;
+import geoves.mineralogy.block.entity.custom.CoolerBlockEntity;
 import geoves.mineralogy.block.entity.custom.FreezerBlockEntity;
 import geoves.mineralogy.block.entity.custom.SlagFurnaceBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -17,6 +18,9 @@ public class ModBlockEntities {
     public static final BlockEntityType<SlagFurnaceBlockEntity> SLAG_FURNACE_BE =
             Registry.register(Registries.BLOCK_ENTITY_TYPE, Identifier.of(Mineralogy.MOD_ID, "slag_furnace_be"),
                     FabricBlockEntityTypeBuilder.create(SlagFurnaceBlockEntity::new, ModBlocks.SLAG_FURNACE_BLOCK).build());
+    public static final BlockEntityType<CoolerBlockEntity> COOLER_BE =
+            Registry.register(Registries.BLOCK_ENTITY_TYPE, Identifier.of(Mineralogy.MOD_ID, "cooler_be"),
+                    FabricBlockEntityTypeBuilder.create(CoolerBlockEntity::new, ModBlocks.COOLER_BLOCK).build());
 
     public static void registerBlockEntities() {
         Mineralogy.LOGGER.info("Registering Block Entitiyes for " + Mineralogy.MOD_ID);

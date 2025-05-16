@@ -1,0 +1,17 @@
+{
+  "type": "mineralogy:slag_smelting",
+  "ingredient": [
+    "minecraft:raw_copper",
+    "minecraft:copper_ore",
+    "minecraft:deepslate_copper_ore"
+  ],
+  "result": {
+    "id": "minecraft:copper_ingot",
+    "count": 1
+  },
+  "byproduct_result": {
+    "id": "mineralogy:copper_slag_block",
+    "count": 1
+  },
+  "experience": 1.0
+}
