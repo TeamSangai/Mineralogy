@@ -14,6 +14,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.item.FuelRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -40,10 +41,13 @@ public class SlagFurnaceBlockEntity extends BlockEntity implements ExtendedScree
     private static final int INPUT_SLOT = 1;
     private static final int OUTPUT_SLOT = 2;
     private static final int OUTPUT_SLOT_TWO = 3;
-
+    private static final short DEFAULT_LIT_TIME_REMAINING = 0;
+    private static final short DEFAULT_LIT_TOTAL_TIME = 0;
     protected final PropertyDelegate propertyDelegate;
     private int progress = 0;
-    private int maxProgress = 230;
+    private int maxProgress = 300;
+    int litTimeRemaining;
+    int litTotalTime;
 
     public SlagFurnaceBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.SLAG_FURNACE_BE, pos, state);
@@ -53,6 +57,8 @@ public class SlagFurnaceBlockEntity extends BlockEntity implements ExtendedScree
                 return switch (index) {
                     case 0 -> SlagFurnaceBlockEntity.this.progress;
                     case 1 -> SlagFurnaceBlockEntity.this.maxProgress;
+                    case 2 -> SlagFurnaceBlockEntity.this.litTimeRemaining;
+                    case 3 -> SlagFurnaceBlockEntity.this.litTotalTime;
                     default -> 0;
                 };
             }
@@ -82,6 +88,11 @@ public class SlagFurnaceBlockEntity extends BlockEntity implements ExtendedScree
         return this.pos;
     }
 
+    private boolean isBurning() {
+        return this.litTimeRemaining > 0;
+    }
+
+
     @Override
     public Text getDisplayName() {
         return Text.translatable("block.mineralogy.slag_furnace_block");
@@ -108,21 +119,39 @@ public class SlagFurnaceBlockEntity extends BlockEntity implements ExtendedScree
         return new SlagFurnaceScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
     }
     public void tick(World world, BlockPos pos, BlockState state) {
-        if(hasRecipe()) {
+        if(hasRecipe() && isBurning()) {
             increaseCraftingProgress();
+            decreaseBurnTime();
             markDirty(world, pos, state);
 
             if(hasCraftingFinished()) {
                 craftItem();
                 resetProgress();
             }
-        } else {
-            resetProgress();
+        } else if (!isBurning() || !hasRecipe()) {
+            if (!isBurning() && hasFuel(world.getFuelRegistry(), inventory.getFirst()) ) {
+                litTimeRemaining = this.getFuelTime(world.getFuelRegistry(), inventory.getFirst());
+                litTotalTime = litTimeRemaining;
+                inventory.getFirst().decrement(1);
+            }
+            else {
+                decreaseProgress();
+            }
         }
     }
+
+    private boolean hasFuel(FuelRegistry fuelRegistry, ItemStack stack) {
+        return fuelRegistry.isFuel(stack);
+    }
+
+    protected int getFuelTime(FuelRegistry fuelRegistry, ItemStack stack) {
+        return fuelRegistry.getFuelTicks(stack);
+    }
+
+    private void decreaseBurnTime() {this.litTimeRemaining--;}
     private void resetProgress() {
         this.progress = 0;
-        this.maxProgress = 230;
+        this.maxProgress = 300;
     }
     private void craftItem() {
         Optional<RecipeEntry<SlagSmeltingRecipe>> recipe = getCurrentRecipe();
@@ -143,6 +172,10 @@ public class SlagFurnaceBlockEntity extends BlockEntity implements ExtendedScree
 
     private void increaseCraftingProgress() {
         this.progress++;
+    }
+
+    private void decreaseProgress() {
+        this.progress--;
     }
 
     private boolean hasRecipe() {

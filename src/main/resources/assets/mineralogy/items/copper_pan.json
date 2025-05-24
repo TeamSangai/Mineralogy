@@ -1,20 +1,22 @@
 {
   "model": {
     "type": "minecraft:select",
-    "cases": [{
-      "model": {
-        "type": "minecraft:model",
-        "model": "mineralogy:item/copper_pan3d"
-      },
-      "when": [
-
-        "ground",
-        "fixed"
-      ]
-    }],
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "mineralogy:item/copper_pan"
+        },
+        "when": [
+          "gui",
+          "ground",
+          "fixed"
+        ]
+      }
+    ],
     "fallback": {
       "type": "minecraft:model",
-      "model": "mineralogy:item/copper_pan"
+      "model": "mineralogy:item/copper_pan3d"
     },
     "property": "minecraft:display_context"
   }

@@ -2,7 +2,8 @@ package geoves.mineralogy.block.entity.custom;
 
 import geoves.mineralogy.block.entity.ImplementedInventory;
 import geoves.mineralogy.block.entity.ModBlockEntities;
-import geoves.mineralogy.screen.custom.FreezerScreenHandler;
+import geoves.mineralogy.recipe.*;
+import geoves.mineralogy.screen.custom.CoolerScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,10 +17,13 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
@@ -27,13 +31,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import static geoves.mineralogy.block.custom.FreezerBlock.ACTIVE;
+import java.util.Optional;
+
+import static geoves.mineralogy.block.custom.CoolerBlock.ACTIVE;
 
 public class CoolerBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
-    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
+    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
 
-    private static final int INPUT_SLOT = 0;
-    private static final int OUTPUT_SLOT = 1;
+    private static final int COLD_FUEL_SLOT = 0;
+    private static final int INPUT_SLOT = 1;
+    private static final int OUTPUT_SLOT = 2;
 
     protected final PropertyDelegate propertyDelegate;
     private int progress = 0;
@@ -84,7 +91,7 @@ public class CoolerBlockEntity extends BlockEntity implements ExtendedScreenHand
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new FreezerScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
+        return new CoolerScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
     }
 
     @Override
@@ -105,7 +112,6 @@ public class CoolerBlockEntity extends BlockEntity implements ExtendedScreenHand
 
     public void tick(World world, BlockPos pos, BlockState state) {
         if(hasRecipe()) {
-            BooleanProperty active = ACTIVE;
             increaseCraftingProgress();
             markDirty(world, pos, state);
 
@@ -124,7 +130,9 @@ public class CoolerBlockEntity extends BlockEntity implements ExtendedScreenHand
     }
 
     private void craftItem() {
-        ItemStack output = new ItemStack(Items.POWDER_SNOW_BUCKET, 1);
+        Optional<RecipeEntry<SlagCoolingRecipe>> recipe = getCurrentRecipe();
+
+        ItemStack output = recipe.get().value().output();
 
         this.removeStack(INPUT_SLOT, 1);
         this.setStack(OUTPUT_SLOT, new ItemStack(output.getItem(),
@@ -140,11 +148,20 @@ public class CoolerBlockEntity extends BlockEntity implements ExtendedScreenHand
     }
 
     private boolean hasRecipe() {
-        Item input = Items.WATER_BUCKET;
-        ItemStack output = new ItemStack(Items.POWDER_SNOW_BUCKET);
+        Optional<RecipeEntry<SlagCoolingRecipe>> recipe = getCurrentRecipe();
+        if (recipe.isEmpty()) {
+            return false;
+        }
+        ItemStack output = recipe.get().value().output();
 
-        return this.getStack(INPUT_SLOT).isOf(input) &&
-                canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
+        return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
+    }
+
+    private Optional<RecipeEntry<SlagCoolingRecipe>> getCurrentRecipe() {
+        ServerRecipeManager.MatchGetter<SlagCoolingRecipeInput, SlagCoolingRecipe> getter =
+                ServerRecipeManager.createCachedMatchGetter(ModRecipes.SLAG_COOLING_RECIPE_TYPE);
+
+        return getter.getFirstMatch(new SlagCoolingRecipeInput(inventory.get(INPUT_SLOT)), (ServerWorld) this.getWorld());
     }
 
     private boolean canInsertItemIntoOutputSlot(ItemStack output) {

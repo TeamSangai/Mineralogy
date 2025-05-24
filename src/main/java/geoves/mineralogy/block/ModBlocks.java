@@ -40,6 +40,9 @@ public class ModBlocks {
     public static final Block PAYDIRT_DRY = registerBlock( "paydirt_dry",
             new PaydirtDry(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Mineralogy.MOD_ID, "paydirt_dry"))).strength(0.7f, 1f)
                     .requiresTool().sounds(BlockSoundGroup.GRAVEL)));
+    public static final Block PAYDIRT_MOIST = registerBlock( "paydirt_moist",
+            new PaydirtMoist(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Mineralogy.MOD_ID, "paydirt_moist"))).strength(0.7f, 1f)
+                    .requiresTool().sounds(BlockSoundGroup.MUD)));
     public static final Block FREEZER_BLOCK = registerBlock( "freezer_block",
             new FreezerBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Mineralogy.MOD_ID, "freezer_block"))).strength(1f, 1f)));
     public static final Block SLAG_FURNACE_BLOCK = registerBlock( "slag_furnace_block",

@@ -1,6 +1,6 @@
 package geoves.mineralogy.screen.custom;
 
-import geoves.mineralogy.block.entity.custom.SlagFurnaceBlockEntity;
+import geoves.mineralogy.block.entity.custom.CoolerBlockEntity;
 import geoves.mineralogy.screen.ModScreenHandlers;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,37 +11,34 @@ import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 
-public class SlagFurnaceScreenHandler extends ScreenHandler {
+public class CoolerScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     private final PropertyDelegate propertyDelegate;
-    public final SlagFurnaceBlockEntity blockEntity;
+    public final CoolerBlockEntity blockEntity;
 
-    public SlagFurnaceScreenHandler(int syncId, PlayerInventory inventory, BlockPos pos) {
-        this(syncId, inventory, inventory.player.getWorld().getBlockEntity(pos), new ArrayPropertyDelegate(4));
+    public CoolerScreenHandler(int syncId, PlayerInventory inventory, BlockPos pos) {
+        this(syncId, inventory, inventory.player.getWorld().getBlockEntity(pos), new ArrayPropertyDelegate(2));
     }
 
-
-    public SlagFurnaceScreenHandler(int syncId, PlayerInventory playerInventory,
-                                BlockEntity blockEntity, PropertyDelegate arrayPropertyDelegate) {
-        super(ModScreenHandlers.SLAG_FURNACE_SCREEN_HANDLER, syncId);
+    public CoolerScreenHandler(int syncId, PlayerInventory playerInventory,
+                               BlockEntity blockEntity, PropertyDelegate arrayPropertyDelegate) {
+        super(ModScreenHandlers.COOLER_SCREEN_HANDLER, syncId);
         this.inventory = ((Inventory) blockEntity);
-        this.blockEntity = ((SlagFurnaceBlockEntity) blockEntity);
+        this.blockEntity = ((CoolerBlockEntity) blockEntity);
         this.propertyDelegate = arrayPropertyDelegate;
 
         this.addSlot(new Slot(inventory, 0, 56, 53));
         this.addSlot(new Slot(inventory, 1, 56, 17));
-        this.addSlot(new Slot(inventory, 2, 116, 26));
-        this.addSlot(new Slot(inventory, 3, 116, 46));
+        this.addSlot(new Slot(inventory, 2, 116, 35));
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
 
         addProperties(arrayPropertyDelegate);
     }
+
     public boolean isCrafting() {
         return propertyDelegate.get(0) > 0;
     }
@@ -95,22 +92,5 @@ public class SlagFurnaceScreenHandler extends ScreenHandler {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
-    }
-    public boolean isBurning() {
-        return this.propertyDelegate.get(0) > 0;
-    }
-
-    public float getCookProgress() {
-        int i = this.propertyDelegate.get(2);
-        int j = this.propertyDelegate.get(3);
-        return j != 0 && i != 0 ? MathHelper.clamp((float)i / (float)j, 0.0F, 1.0F) : 0.0F;
-    }
-
-    public float getFuelProgress() {
-        int i = this.propertyDelegate.get(1);
-        if (i == 0) {
-            i = 200;
-        }
-        return MathHelper.clamp((float)this.propertyDelegate.get(0) / (float)i, 0.0F, 1.0F);
     }
 }

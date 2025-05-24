@@ -13,7 +13,7 @@ public class SlagFurnaceScreen extends HandledScreen<SlagFurnaceScreenHandler> {
     private static final Identifier GUI_TEXTURE =
             Identifier.of(Mineralogy.MOD_ID, "textures/gui/slag_furnace_block_gui.png");
     private static final Identifier LIT_PROGRESS_TEXTURE = Identifier.ofVanilla("container/furnace/lit_progress");
-    private static final Identifier BURN_PROGRESS_TEXTURE = Identifier.ofVanilla("container/furnace/burn_progress");
+    private static final Identifier BURN_PROGRESS_TEXTURE = Identifier.ofVanilla("container/blast_furnace/burn_progress");
 
     private final Identifier litProgressTexture = LIT_PROGRESS_TEXTURE;
     private final Identifier burnProgressTexture = BURN_PROGRESS_TEXTURE;
@@ -28,13 +28,13 @@ public class SlagFurnaceScreen extends HandledScreen<SlagFurnaceScreenHandler> {
         context.drawTexture(RenderLayer::getGuiTextured, GUI_TEXTURE, i, j, 0.0F, 0.0F, this.backgroundWidth, this.backgroundHeight, 256, 256);
         if (this.handler.isBurning()) {
             int k = 14;
-            int l = MathHelper.ceil(this.handler.getFuelProgress() * 13.0F) + 1;
-            context.drawGuiTexture(RenderLayer::getGuiTextured, this.litProgressTexture, 14, 14, 0, 14 - l, i + 56, j + 36 + 14 - l, 14, l);
+            int l = MathHelper.ceil(this.handler.getFuelProgress() * 22.0F) + 1;
+            context.drawGuiTexture(RenderLayer::getGuiTextured, this.burnProgressTexture, 24, 16, 0, 0, i + 79, j + 34, l, 16);
         }
 
         int k = 24;
         int l = MathHelper.ceil(this.handler.getCookProgress() * 24.0F);
-        context.drawGuiTexture(RenderLayer::getGuiTextured, this.burnProgressTexture, 24, 16, 0, 0, i + 79, j + 34, l, 16);
+        context.drawGuiTexture(RenderLayer::getGuiTextured, this.litProgressTexture, 14, 14, 0, 14 - l, i + 56, j + 36 + 14 - l, 14, l);
     }
 
 

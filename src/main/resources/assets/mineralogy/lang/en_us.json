@@ -10,5 +10,6 @@
   "block.mineralogy.gold_slag_block": "Hot Gold Slag",
   "block.mineralogy.gold_slag_cooled_block": "Cooled Gold Slag",
   "block.mineralogy.freezer_block": "Freezer",
-  "block.mineralogy.slag_furnace_block": "Slag Furnace"
+  "block.mineralogy.slag_furnace_block": "Slag Furnace",
+  "block.mineralogy.cooler_block": "Cooler"
 }

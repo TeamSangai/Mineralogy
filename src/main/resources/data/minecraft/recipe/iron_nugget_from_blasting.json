@@ -3,7 +3,7 @@
   "type": "minecraft:blasting",
   "category": "misc",
   "cookingtime": 100,
-  "experience": 0.1,
+  "experience": 0.25,
   "ingredient": [
     "minecraft:iron_pickaxe",
     "minecraft:iron_shovel",

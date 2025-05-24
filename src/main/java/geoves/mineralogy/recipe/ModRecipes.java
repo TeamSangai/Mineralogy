@@ -17,6 +17,15 @@ public class ModRecipes {
             public String toString(){
                 return "slag_smelting";
             }});
+    public static final RecipeSerializer<SlagCoolingRecipe> SLAG_COOLING_SERIALIZER = Registry.register(
+            Registries.RECIPE_SERIALIZER, Identifier.of(Mineralogy.MOD_ID, "slag_cooling"),
+            new SlagCoolingRecipe.Serializer());
+    public static final RecipeType<SlagCoolingRecipe> SLAG_COOLING_RECIPE_TYPE = Registry.register(
+            Registries.RECIPE_TYPE, Identifier.of(Mineralogy.MOD_ID, "slag_cooling"), new RecipeType<SlagCoolingRecipe>() {
+                @Override
+                public String toString(){
+                    return "slag_cooling";
+                }});
     public static void registerRecipies() {
         Mineralogy.LOGGER.info("Registering Mod Recipies for " + Mineralogy.MOD_ID);
     }

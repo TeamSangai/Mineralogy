@@ -1,6 +1,7 @@
 package geoves.mineralogy.screen;
 
 import geoves.mineralogy.Mineralogy;
+import geoves.mineralogy.screen.custom.CoolerScreenHandler;
 import geoves.mineralogy.screen.custom.FreezerScreenHandler;
 import geoves.mineralogy.screen.custom.SlagFurnaceScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
@@ -17,6 +18,9 @@ public class ModScreenHandlers {
     public static final ScreenHandlerType<SlagFurnaceScreenHandler> SLAG_FURNACE_SCREEN_HANDLER =
             Registry.register(Registries.SCREEN_HANDLER, Identifier.of(Mineralogy.MOD_ID, "slag_furnace_screen_handler"),
                     new ExtendedScreenHandlerType<>(SlagFurnaceScreenHandler::new, BlockPos.PACKET_CODEC));
+    public static final ScreenHandlerType<CoolerScreenHandler> COOLER_SCREEN_HANDLER =
+            Registry.register(Registries.SCREEN_HANDLER, Identifier.of(Mineralogy.MOD_ID, "cooler_screen_handler"),
+                    new ExtendedScreenHandlerType<>(CoolerScreenHandler::new, BlockPos.PACKET_CODEC));
 
 
     public static void registerScreenHandlers() {

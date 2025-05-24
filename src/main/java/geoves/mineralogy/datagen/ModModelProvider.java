@@ -1,10 +1,13 @@
 package geoves.mineralogy.datagen;
 
+import geoves.mineralogy.Mineralogy;
 import geoves.mineralogy.block.ModBlocks;
 import geoves.mineralogy.item.ModItems;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.client.data.*;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.util.Identifier;
 
 
 public class ModModelProvider extends FabricModelProvider {
@@ -21,6 +24,7 @@ public class ModModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.GOLD_SLAG_BLOCK);
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.GOLD_SLAG_COOLED_BLOCK);
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.PAYDIRT_DRY);
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.PAYDIRT_MOIST);
     }
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {

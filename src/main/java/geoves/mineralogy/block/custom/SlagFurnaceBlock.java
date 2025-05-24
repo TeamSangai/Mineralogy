@@ -60,6 +60,7 @@ public class SlagFurnaceBlock extends BlockWithEntity implements BlockEntityProv
         return ActionResult.SUCCESS;
     }
 
+
     protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (world instanceof ServerWorld){
             if(state.getBlock() != newState.getBlock()) {

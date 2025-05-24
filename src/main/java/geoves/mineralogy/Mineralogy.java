@@ -2,6 +2,7 @@ package geoves.mineralogy;
 
 import geoves.mineralogy.block.ModBlocks;
 import geoves.mineralogy.block.entity.ModBlockEntities;
+import geoves.mineralogy.component.MineralogyDataComponentTypes;
 import geoves.mineralogy.item.ModItems;
 import geoves.mineralogy.recipe.ModRecipes;
 import geoves.mineralogy.screen.ModScreenHandlers;
@@ -27,6 +28,7 @@ public class Mineralogy implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		MineralogyDataComponentTypes.registerMineralogyDataComponentTypes();
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerBlockEntities();

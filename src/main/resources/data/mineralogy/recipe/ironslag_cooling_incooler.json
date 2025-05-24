@@ -1,0 +1,9 @@
+{
+  "type": "mineralogy:slag_cooling",
+  "ingredient": [
+    "mineralogy:iron_slag_block"
+  ],"result": {
+  "id": "mineralogy:iron_slag_cooled_block",
+  "count": 1
+  }
+}
